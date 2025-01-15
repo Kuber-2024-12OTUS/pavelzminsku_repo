@@ -7,26 +7,22 @@ spec:
   volumes:
     - name: sharedvolume
       emptyDir: {}
-  containers:
-    - name: nginx
-      image: nginx
-      ports:
-        - containerPort: 8000
-      volumeMounts:
-        - name: sharedvolume
-          mountPath: /homework
-      lifecycle:
-        preStop:
-          exec:
-            command:
-              - sh
-              - -c
-              - rm -f /homework/index.html      
   initContainers:
-    - name: init-cont
+    - name: initcontaner
       image: busybox
-      command: ['sh', '-c',"echo "Курсы по k8s. Домашнее задание №1" > /init/index.html"]
+      command: ['sh', '-c','echo "Курсы по k8s. Домашнее задание №1" > /init/index.html']
       volumeMounts:
         - name: sharedvolume
           mountPath: /init
-
+  containers:
+   - name: webserver
+     image: nginx
+     ports:
+       - containerPort: 8000
+     volumeMounts:
+       - name: sharedvolume
+         mountPath: /homework
+     lifecycle:
+        preStop:
+          exec:
+            command:['sh','-c','rm -f /homework/index.html']  

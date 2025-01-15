@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/v1@pod": "file:///c%3A/Users/admin/OneDrive/Git/Otus_k8s/pavelzminsku_repo/kubernetes-intro/pod.yaml"
+    }
+}
