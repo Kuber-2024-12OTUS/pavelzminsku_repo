@@ -23,8 +23,6 @@ spec:
      volumeMounts:
        - name: sharedvolume
          mountPath: /homework
-     labels:
-      run: nginx
      lifecycle:
         preStop:
           exec:
