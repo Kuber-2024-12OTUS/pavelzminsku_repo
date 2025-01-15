@@ -5,25 +5,15 @@ metadata:
   namespace: homework
 spec:
   volumes:
-    - name: shared-volume
+    - name: sharedvolume
       emptyDir: {}
-  initContainers:
-    - name: busybox
-      image: busybox
-      command:
-        - sh
-        - -c
-        - echo "Курсы по k8s. Домашнее задание №1" > /init/index.html
-      volumeMounts:
-        - name: shared-volume
-          mountPath: /init
   containers:
     - name: nginx
-      image: nginx:latest
+      image: nginx
       ports:
         - containerPort: 8000
       volumeMounts:
-        - name: shared-volume
+        - name: sharedvolume
           mountPath: /homework
       lifecycle:
         preStop:
@@ -31,4 +21,12 @@ spec:
             command:
               - sh
               - -c
-              - rm -f /homework/index.html
+              - rm -f /homework/index.html      
+  initContainers:
+    - name: init-cont
+      image: busybox
+      command: ['sh', '-c',"echo "Курсы по k8s. Домашнее задание №1" > /init/index.html"]
+      volumeMounts:
+        - name: sharedvolume
+          mountPath: /init
+
