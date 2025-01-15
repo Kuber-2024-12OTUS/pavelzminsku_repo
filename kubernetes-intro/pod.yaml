@@ -6,7 +6,8 @@ metadata:
 spec:
   volumes:
     - name: sharedvolume
-      emptyDir: {}
+      emptyDir:
+        sizeLimit: 10Mi
   initContainers:
     - name: initcontaner
       image: busybox
@@ -22,6 +23,8 @@ spec:
      volumeMounts:
        - name: sharedvolume
          mountPath: /homework
+     labels:
+      run: nginx
      lifecycle:
         preStop:
           exec:
