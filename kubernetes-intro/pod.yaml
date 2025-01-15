@@ -15,7 +15,7 @@ spec:
         - name: sharedvolume
           mountPath: /init
   containers:
-   - name: webserver
+   - name: nginx
      image: nginx
      ports:
        - containerPort: 8000
@@ -25,4 +25,4 @@ spec:
      lifecycle:
         preStop:
           exec:
-            command:['sh','-c','rm -f /homework/index.html']  
+            command: ['sh','-c','rm -f /homework/index.html']  
