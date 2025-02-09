@@ -1,0 +1,9 @@
+#Создать манифест cm.yaml для объекта типа configMap, описывающий произвольный набор пар ключ-значение
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: confmap-homework
+data:
+  logging_enable: "true"
+  log_level: debug
+
