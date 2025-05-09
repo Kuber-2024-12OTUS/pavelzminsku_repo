@@ -3,9 +3,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pv-homework
+  namespace: homework
 spec:
   accessModes:
-    - ReadWriteOncePod
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
