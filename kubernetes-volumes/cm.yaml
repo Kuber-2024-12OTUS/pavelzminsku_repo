@@ -1,0 +1,24 @@
+#Создать манифест cm.yaml для объекта типа configMap, описывающий произвольный набор пар ключ-значение
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: confmap-homework
+  namespace: homework
+data:
+  file: |
+    logging_enable: "true"
+    log_level: "debug"
+  default.conf: |
+    server {
+        listen 8000;
+        server_name localhost;
+        location / {
+            root /homework;
+            index index.html;
+        }
+        location /conf/ {
+           alias /homework/conf/;
+            autoindex on;
+            default_type text/plain;
+        }
+    }
