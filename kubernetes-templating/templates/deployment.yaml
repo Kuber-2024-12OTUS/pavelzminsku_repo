@@ -2,44 +2,48 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: homework
+  namespace: {{ .Values.namespace }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: app-nginx
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
   template:
     metadata:
       labels:
         app: app-nginx
     spec:
-      serviceAccountName: monitoring
+      serviceAccountName: {{ .Values.serviceAccounts.monitoring }}
       nodeSelector:
-        env: homework
+        env: {{ .Values.nodeSelector.env }}
       volumes:
         - name: sharedvolume
           persistentVolumeClaim:
-            claimName: pv-homework
+            claimName: {{ .Values.persistence.claimName }}
         - name: configvolume
           configMap:
-            name: confmap-homework 
+            name: {{ .Values.configMapName }}
       initContainers:
         - name: init-container
           image: busybox
-          command: 
-           - sh
-           - -c
-           - |
-             echo "K8s by OTUS. Lesson #6. Homework#5" > /init/index.html
-             wget -q -O /init/metrics.html http://kube-state-metrics.kube-system.svc.cluster.local:8080/metrics
+          command:
+            - sh
+            - -c
+            - |
+              echo "K8s by OTUS. Lesson #7. Homework#6" > /init/index.html
+              wget -q -O /init/metrics.html http://kube-state-metrics.kube-system.svc.cluster.local:8080/metrics
           volumeMounts:
             - name: sharedvolume
-              mountPath: /init    
+              mountPath: /init
       containers:
-        - name: nginx
-          image: nginx
+        - name: {{ .Values.container.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 8000
+            - containerPort: {{ .Values.container.port }}
           volumeMounts:
             - name: sharedvolume
               mountPath: /homework
@@ -53,13 +57,11 @@ spec:
             preStop:
               exec:
                 command: ['sh', '-c', 'rm -f /homework/index.html']
+          {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
-              path: /index.html
-              port: 8000
-            initialDelaySeconds: 10 
-            periodSeconds: 10      
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          {{- end }}

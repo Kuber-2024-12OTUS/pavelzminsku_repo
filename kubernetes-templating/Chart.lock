@@ -1,0 +1,9 @@
+dependencies:
+- name: mysql
+  repository: https://charts.bitnami.com/bitnami
+  version: 13.0.0
+- name: kube-state-metrics
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 5.13.0
+digest: sha256:24969dfb49e690d8900dfd337f78c9033a73d2394e1fad07f9f8760a95979028
+generated: "2025-05-18T22:26:30.985204+03:00"

@@ -1,18 +1,19 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: cd
-  namespace: homework
+  name: {{ .Values.serviceAccounts.administrator }}
+  namespace: {{ .Values.namespace }}
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: binding-cd-admin
-  namespace: homework
+  namespace: {{ .Values.namespace }}
 subjects:
-  - kind: ServiceAccount
-    name: cd
-    namespace: homework
+- kind: ServiceAccount
+  name: {{ .Values.serviceAccounts.administrator }}
+  namespace: {{ .Values.namespace }}
 roleRef:
   kind: ClusterRole
   name: admin

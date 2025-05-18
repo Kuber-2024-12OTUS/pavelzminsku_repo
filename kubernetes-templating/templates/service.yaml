@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-nginx
-  namespace: homework
+  name: {{ .Values.service.name }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.service.type }}
   selector:
     app: app-nginx
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000 
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.container.port }}

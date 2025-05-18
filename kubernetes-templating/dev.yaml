@@ -1,0 +1,19 @@
+image:
+  tag: "latest"
+
+persistence:
+  enabled: false
+
+broker:
+  replicaCount: 1
+
+listeners:
+  client:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+
+extraEnvVars:
+  - name: KAFKA_CFG_INITIAL_BROKER_REGISTRATION_TIMEOUT_MS
+    value: "240000"
+
