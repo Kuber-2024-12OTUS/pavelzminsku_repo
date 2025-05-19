@@ -1,0 +1,27 @@
+# rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-mysql
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cr-mysql
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-mysql
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cr-mysql
+subjects:
+- kind: ServiceAccount
+  name: sa-mysql
+  namespace: default
