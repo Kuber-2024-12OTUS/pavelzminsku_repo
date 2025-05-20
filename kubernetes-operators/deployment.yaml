@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operator-mysql
+  template:
+    metadata:
+      labels:
+        app: operator-mysql
+    spec:
+      serviceAccountName: sa-mysql
+      containers:
+      - name: operator
+        image: roflmaoinmysoul/mysql-operator:1.0.0
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "400m"
+          requests:
+            memory: "64Mi"
+            cpu: "200m"
