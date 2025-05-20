@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMapName }}
+  namespace: {{ .Values.namespace }}
+data:
+  file: |
+    logging_enable: "true"
+    log_level: "debug"
+  default.conf: |
+    server {
+        listen {{ .Values.container.port}};
+        server_name localhost;
+        location / {
+            root /homework;
+            index index.html;
+        }
+        location /conf/ {
+           alias /homework/conf/;
+            autoindex on;
+            default_type text/plain;
+        }
+    }

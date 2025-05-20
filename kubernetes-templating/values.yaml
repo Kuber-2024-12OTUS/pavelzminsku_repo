@@ -1,0 +1,43 @@
+namespace: homework
+
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: latest
+
+container:
+  name: nginx
+  port: 8000
+
+nodeSelector:
+  env: homework
+
+persistence:
+  claimName: pv-homework
+  storageClass: sc-homework
+  size: 1Gi
+
+configMapName: confmap-homework
+
+service:
+  name: service-nginx
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  name: homework-ingress
+  host: homework.otus
+  paths:
+    - /
+    - /homepage
+
+readinessProbe:
+  enabled: true
+  path: /index.html
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+serviceAccounts:
+  administrator: cd
+  monitoring: monitoring

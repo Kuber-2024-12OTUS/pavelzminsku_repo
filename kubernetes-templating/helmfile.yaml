@@ -1,0 +1,18 @@
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+
+releases:
+  - name: kafkaprod
+    namespace: prod
+    createNamespace: true
+    chart: bitnami/kafka
+    values:
+      - prod.yaml
+
+  - name: kafkadev
+    namespace: dev
+    createNamespace: true
+    chart: bitnami/kafka
+    values:
+      - dev.yaml

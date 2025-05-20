@@ -1,0 +1,14 @@
+image:
+  tag: "3.5.2"
+
+listeners:
+  client:
+    protocol: SASL_PLAINTEXT
+  interbroker:
+    protocol: SASL_PLAINTEXT
+
+broker:
+  replicaCount: 5
+
+persistence:
+  enabled: false
