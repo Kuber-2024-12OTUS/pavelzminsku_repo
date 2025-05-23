@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-exp-service
+  namespace: monitoring
+  labels:
+   app: nginx-exp
+spec:
+  selector:
+    app: nginx-exp
+  ports:
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+  type: ClusterIP
