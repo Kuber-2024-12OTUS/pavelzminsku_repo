@@ -1,3 +1,25 @@
+# Выполнено ДЗ №
+
+ - [ ] Основное ДЗ
+ - [ x] Задание со *
+
+## В процессе сделано:
+Собран кастомный образ nginx отдающий свои метрики на эндпоинте /nginx_metrics
+Установлен Prometheus
+Настроен prometheus export для сбора метрик с nginx
+Создан servicemonitor описывающий сбор метри созданых подов
+
+## Как запустить проект:
+Во всех основных образах nginx module http_stub_status_module уже включен в образ.
+
+minikube image build -t nginx:homework .
+
+
+## Как проверить работоспособность:
+ - Например, перейти по ссылке http://localhost:8080
+
+## PR checklist:
+ - [ ] Выставлен label с темой домашнего задания
 
 
 
@@ -9,15 +31,3 @@ helm upgrade -i prometheus prometheus-community/kube-prometheus-stack --namespac
 
 kubectl port-forward -n monitoring svc/nginx-exp-service 8090:8090
 kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090
-
-
-
-
-PS C:\Users\admin\OneDrive\Git\Otus_k8s\pavelzminsku_repo\kubernetes-monitoring> kubectl get svc -n monitoring                                                         
-NAME                                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-nginx-exp-service                       ClusterIP   10.102.229.203   <none>        80/TCP,8090/TCP     8h
-prometheus-kube-prometheus-operator     ClusterIP   10.108.249.254   <none>        443/TCP             8h
-prometheus-kube-prometheus-prometheus   ClusterIP   10.108.58.202    <none>        9090/TCP,8080/TCP   8h
-prometheus-kube-state-metrics           ClusterIP   10.98.221.210    <none>        8080/TCP            8h
-prometheus-operated                     ClusterIP   None             <none>        9090/TCP            8h
-prometheus-prometheus-node-exporter     ClusterIP   10.100.152.133   <none>        9100/TCP            8h
