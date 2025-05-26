@@ -15,7 +15,7 @@ loki:
       s3: https://storage.yandexcloud.net
       endpoint: https://storage.yandexcloud.net
       region: ru-central1
-      secretAccessKey:  "${S3_SECRET}"
+      secretAccessKey: "${S3_SECRET}"
       accessKeyId: "${S3_ACCESS_KEY}"
       s3ForcePathStyle: false
       insecure: false
