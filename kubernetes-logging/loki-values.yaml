@@ -1,0 +1,87 @@
+﻿deploymentMode: SingleBinary
+loki:
+  commonConfig:
+    replication_factor: 1
+  memcached:
+    chunk_cache:
+      enabled: false
+    results_cache:
+      enabled: false
+  storage:
+    type: s3
+    bucketNames:
+      chunks: "otus-homework9"
+    s3:
+      s3: https://storage.yandexcloud.net
+      endpoint: https://storage.yandexcloud.net
+      region: ru-central1
+      secretAccessKey: "YCMErYzd_J29i_d_GsydE9DJTKaQ3SdlvxsyL7HH"
+      accessKeyId: "YCAJE4wqh4p3qeqEoZDng59Tk"
+      s3ForcePathStyle: false
+      insecure: false
+    filesystem:
+      #chunks_directory: /var/loki/chunks
+      rules_directory: /var/loki/rules
+      admin_api_directory: /var/loki/admin
+  auth_enabled: false
+  schemaConfig:
+    configs:
+      - from: 2025-02-11
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+    chunk_encoding: snappy
+  tracing:
+    enabled: true
+  querier:
+    max_concurrent: 4
+
+singleBinary:
+  replicas: 1
+  nodeSelector: 
+    node-role: infra
+  tolerations: 
+    - key: "node-role"
+      operator: "Equal"
+      value: "infra"
+      effect: "NoSchedule"
+chunksCache:
+  enabled: false
+minio:
+  enabled: false
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+memcached:
+  enabled: false
+memcachedExporter:
+  enabled: false
+test:
+  enabled: false
+lokiCanary:
+  enabled: false
