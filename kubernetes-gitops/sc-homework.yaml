@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-homework
+provisioner: disk-csi-driver.mks.ycloud.io  
+parameters:
+  type: network-hdd  
+reclaimPolicy: Retain
