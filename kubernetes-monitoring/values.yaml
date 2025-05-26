@@ -1,0 +1,18 @@
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'nginx-exp'
+        honor_labels: true
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - monitoring
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_label_app]
+            regex: nginx-exp
+            action: keep
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            regex: nginx_.*
+            action: keep

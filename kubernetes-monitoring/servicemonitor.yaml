@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nginx-exp-servmon
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+    - monitoring
+  selector:
+    matchLabels:
+      app: nginx-exp
+  endpoints:
+  - port: metrics
+    interval: 15s
+    path: /metrics

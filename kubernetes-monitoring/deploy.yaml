@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-exp
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-exp
+  template:
+    metadata:
+      labels:
+        app: nginx-exp
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:homework 
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "400m"
+          requests:
+            memory: "64Mi"
+            cpu: "200m"
+      - name: exporter
+        image: nginx/nginx-prometheus-exporter:latest
+        args:
+        - -nginx.scrape-uri=http://localhost:80/nginx_metrics
+        - -web.listen-address=:8090
+        ports:
+        - containerPort: 8090
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "400m"
+          requests:
+            memory: "64Mi"
+            cpu: "200m"
