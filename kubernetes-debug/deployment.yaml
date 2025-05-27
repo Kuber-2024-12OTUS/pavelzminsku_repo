@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-distroless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-distroless
+  template:
+    metadata:
+      labels:
+        app: nginx-distroless
+    spec:
+      containers:
+      - name: nginx
+        image: kyos0109/nginx-distroless
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: content
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: content
+        configMap:
+          name: nginx-content
