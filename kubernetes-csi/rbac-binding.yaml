@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: csi-s3-node-access-binding
+subjects:
+- kind: ServiceAccount
+  name: csi-s3-provisioner-sa
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: csi-s3-node-access
+  apiGroup: rbac.authorization.k8s.io

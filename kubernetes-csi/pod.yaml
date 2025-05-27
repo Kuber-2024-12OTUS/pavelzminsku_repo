@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: homework12
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "400m"
+      requests:
+        memory: "64Mi"
+        cpu: "200m"
+    command: 
+      - "/bin/sh"
+      - "-c"
+      - |
+        i=0
+        while true; do
+          echo "File #$i created at $(date '+%Y-%m-%d %H:%M:%S')" > /mnt/s3/file_${i}.txt
+          i=$((i+1))
+          sleep 60
+        done
+    volumeMounts:
+    - name: s3-storage
+      mountPath: /mnt/s3
+  volumes:
+  - name: s3-storage
+    persistentVolumeClaim:
+      claimName: s3-pvc
