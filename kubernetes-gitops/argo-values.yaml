@@ -1,0 +1,45 @@
+global:
+  nodeSelector: 
+    node-role: infra
+    kubernetes.io/os: linux
+  tolerations:
+    - effect: NoSchedule
+      key: node-role
+      operator: Equal
+      value: infra
+  revisionHistoryLimit: 3
+  domain: argocd.example.com
+
+redis-ha: 
+  enabled: false
+notifications: 
+  enabled: false
+commitServer: 
+  enabled: false
+  
+#наследуются из global
+components:
+  controller:
+    nodeSelector: {}
+    tolerations: []
+  
+  server:
+    nodeSelector: {}
+    tolerations: []
+
+  repoServer:
+    nodeSelector: {}
+    tolerations: []
+
+  applicationSet:
+    nodeSelector: {}
+    tolerations: []
+
+  dex:
+    nodeSelector: {}
+    tolerations: []
+
+  redis:
+    enabled: true
+    nodeSelector: {}
+    tolerations: []
