@@ -1,5 +1,6 @@
 
 
+
 #отключаем фаервол
 systemctl stop ufw && systemctl disable ufw
 #отключаем swap
